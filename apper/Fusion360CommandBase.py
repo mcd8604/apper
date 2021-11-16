@@ -342,8 +342,6 @@ class Fusion360CommandBase:
                             self.drop_down_name,
                             self.drop_down_resources,
                             drop_down_cmd_id)
-                        controls = drop_control.controls
-                        break
                     controls = drop_control.controls
 
             # Create the command definition
