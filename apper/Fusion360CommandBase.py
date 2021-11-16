@@ -396,13 +396,14 @@ class Fusion360CommandBase:
             _destroy_object(self.control)
             _destroy_object(self.command_definition)
 
-            if parent is not None:
-                if parent.objectType == adsk.core.DropDownControl.classType():
-                    if parent.controls.count == 0:
+            while (parent is not None and
+                parent.objectType == adsk.core.DropDownControl.classType() and
+                    parent.controls.count == 0):
                         drop_control = parent
                         parent = drop_control.parent
                         drop_control.deleteMe()
-
+            
+            if parent is not None:
                 if parent.objectType == adsk.core.ToolbarPanel.classType():
                     if parent.controls.count == 0:
                         if parent.isValid:
