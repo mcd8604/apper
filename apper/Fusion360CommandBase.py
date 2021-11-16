@@ -7,7 +7,7 @@ Python module for creating a Fusion 360 Command
 :license: Apache 2.0, see LICENSE for more details.
 """
 import traceback
-from typing import List
+from typing import Collection
 
 import adsk.core
 import adsk.fusion
@@ -62,7 +62,10 @@ class Fusion360CommandBase:
         self.drop_down_cmd_id_path = options.get('drop_down_cmd_id_path', drop_down_cmd_id)
         if isinstance(self.drop_down_cmd_id_path, str):
             self.drop_down_cmd_id_path = [self.drop_down_cmd_id_path]
-        elif not (isinstance(self.drop_down_cmd_id_path, List) and len(self.drop_down_cmd_id_path) > 0):
+        elif not ( # a non-empty collection of strings
+                isinstance(self.drop_down_cmd_id_path, Collection) and len(self.drop_down_cmd_id_path) > 0 and 
+                all([isinstance(id, str) for id in self.drop_down_cmd_id_path])
+            ):
             self.drop_down_cmd_id_path = ['Default_DD_CmdId']
 
         self.drop_down_name = options.get('drop_down_name', 'Drop Name')
